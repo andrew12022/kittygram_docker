@@ -1,26 +1,96 @@
-#  Как работать с репозиторием финального задания
+# Kittygram
 
-## Что нужно сделать
+**Kittygram** — социальная сеть для обмена фотографиями любимых питомцев. Это полностью рабочий проект, который состоит из бэкенд-приложения на Django и фронтенд-приложения на React.
 
-Настроить запуск проекта Kittygram в контейнерах и CI/CD с помощью GitHub Actions
+## Функции
+- Kittygram даёт возможность пользователям поделиться и похвастаться фотографиями своих любимых котиков.
+- Зарегистрированные пользователи могут создавать, просматривать, редактировать и удалять свои записи.
 
-## Как проверить работу с помощью автотестов
+## Установка
 
-В корне репозитория создайте файл tests.yml со следующим содержимым:
-```yaml
-repo_owner: ваш_логин_на_гитхабе
-kittygram_domain: полная ссылка (https://доменное_имя) на ваш проект Kittygram
-taski_domain: полная ссылка (https://доменное_имя) на ваш проект Taski
-dockerhub_username: ваш_логин_на_докерхабе
+Клонировать репозиторий и перейти в него в командной строке:
+
+```
+git clone git@github.com:andrew12022/kittygram_final.git
 ```
 
-Скопируйте содержимое файла `.github/workflows/main.yml` в файл `kittygram_workflow.yml` в корневой директории проекта.
+```
+cd kittygram_final/backend
+```
 
-Для локального запуска тестов создайте виртуальное окружение, установите в него зависимости из backend/requirements.txt и запустите в корневой директории проекта `pytest`.
+Cоздать и активировать виртуальное окружение:
 
-## Чек-лист для проверки перед отправкой задания
+```
+python -m venv venv
+```
 
-- Проект Taski доступен по доменному имени, указанному в `tests.yml`.
-- Проект Kittygram доступен по доменному имени, указанному в `tests.yml`.
-- Пуш в ветку main запускает тестирование и деплой Kittygram, а после успешного деплоя вам приходит сообщение в телеграм.
-- В корне проекта есть файл `kittygram_workflow.yml`.
+```
+source venv/bin/activate
+```
+
+Установить зависимости из файла requirements.txt:
+
+```
+python -m pip install --upgrade pip
+```
+
+```
+pip install -r requirements.txt
+```
+
+Создать файл `.env` в исходной папке проекта:
+
+```.env
+POSTGRES_DB=kittygram
+POSTGRES_USER=kittygram_user
+POSTGRES_PASSWORD=kittygram_password
+DB_NAME=kittygram
+DB_HOST=db
+DB_PORT=5432
+SECRET_KEY='указать секретный ключ'
+DEBUG='указать режим работы(False или True)'
+ALLOWED_HOSTS='указать внешний IP сервера, 127.0.0.1, localhost, домен(через запятые, без пробелов)'
+```
+
+Выполнить миграции:
+
+```
+python manage.py migrate
+```
+
+### Контейнеризация
+
+Развернуть контейнеры при помощи docker-compose.production.yml:
+```
+docker compose -f docker-compose.production.yml up
+```
+
+Выполнить миграции:
+```
+docker compose -f docker-compose.production.yml exec backend python manage.py migrate
+```
+
+Собрать статику:
+```
+docker compose -f docker-compose.production.yml exec backend python manage.py collecstatic
+```
+
+Скопировать статику
+```
+sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /backend_static/static/ 
+```
+
+## Технологии и необходимые инструменты
+- Python 3.9
+- Django 3.2.16
+- PostgreSQL
+- Docker
+- Node.js 9.x.x
+- Nginx
+- Gunicorn 20.x.x
+- React 
+- python-dotenv
+- DRF
+
+## Автор
+- [Андрей Елистратов](https://github.com/andrew12022)
