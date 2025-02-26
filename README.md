@@ -8,6 +8,8 @@
 
 ## Установка
 
+### Бэкенд (Django)
+
 Клонировать репозиторий и перейти в него в командной строке:
 
 ```
@@ -58,7 +60,7 @@ ALLOWED_HOSTS='указать внешний IP сервера, 127.0.0.1, local
 python manage.py migrate
 ```
 
-### Контейнеризация
+### Контейнеризация (Docker)
 
 Развернуть контейнеры при помощи docker-compose.production.yml:
 ```
@@ -81,16 +83,16 @@ sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/col
 ```
 
 ## Технологии и необходимые инструменты
-- Python 3.9
-- Django 3.2.16
+- Python
+- Django
+- Django REST framework
 - PostgreSQL
-- Docker
-- Node.js 9.x.x
-- Nginx
-- Gunicorn 20.x.x
-- React 
 - python-dotenv
-- DRF
+- Docker
+- Node.js
+- Nginx
+- Gunicorn
+- React 
 
 ## Автор
 - [Андрей Елистратов](https://github.com/andrew12022)
